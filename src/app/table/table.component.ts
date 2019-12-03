@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { MatTable } from '@angular/material';
 import {MatTableDataSource} from '@angular/material/table';
 
@@ -27,7 +28,7 @@ export class TableComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
     if (localStorage.getItem('dataSource') != null) {
@@ -43,7 +44,6 @@ export class TableComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
   }
 
-  // TODO: download files
   addTestItem() {
     this.ELEMENT_DATA.unshift({dataFile: 'aa', date: 'aaaa', ethHash: 'aaaaa', download: 'aa'});
     this.table.renderRows();
@@ -56,8 +56,22 @@ export class TableComponent implements OnInit {
     localStorage.setItem('dataSource', JSON.stringify(this.ELEMENT_DATA));
   }
 
+  // TODO: change URL in VM
   downloadFile(a) {
-    console.log(a);
+    // console.log(a);
+    this.http.get('https://localhost:44301/HelloWorld/Download/' + a).subscribe(
+      data => {
+        const response = JSON.stringify(data);
+        const x = JSON.parse(response);
+        console.log(x.content);
+        const link = document.createElement('a');
+        link.download = x.fileName;
+        const blob = new Blob([x.content], {type: 'text/plain'});
+        link.href = window.URL.createObjectURL(blob);
+        link.click();
+      },
+      error => console.error('There was an error!', error)
+    );
   }
 
   clearLocalStorage() {

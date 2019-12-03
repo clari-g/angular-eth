@@ -28,6 +28,7 @@ export class AppComponent {
  ipfsHash: string;
  ethHash: string;
 
+ request = new XMLHttpRequest();
 
  constructor(
   @Inject(IPFS) private ipfs,
@@ -104,15 +105,14 @@ export class AppComponent {
       console.log(this.fileData + ' ' + this.fileTableName);
 
       // TODO: crear archivo
-      // subir archivo a IPFS
-      this.ipfsAdd(this.date2, this.fileData);
+      this.createFile(this.date2, this.fileData);
+
     },
     error => console.error('There was an error!', error)
   );
  }
 
  public async ipfsAdd(path: string, value: string) {
-  path += '.txt';
   const content = Buffer.from(value);
   const filesAdded = await this.ipfs.add({path, content});
   this.ipfsHash = filesAdded[0].hash;
@@ -155,5 +155,18 @@ console.log(datetime2);
 return(datetime2);
   }
 }
+
+// TODO: change URL in VM
+ createFile(path: string, content: string) {
+  path += '.txt';
+  const data = new FormData();
+  data.append('fileName' , path);
+  data.append('data' , content);
+  this.request.open('POST', 'https://localhost:44301/HelloWorld/upload2', true);
+  this.request.send(data);
+
+  // subir archivo a IPFS
+  this.ipfsAdd(path, content);
+ }
 
 }
