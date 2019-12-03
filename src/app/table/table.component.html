@@ -1,0 +1,39 @@
+<div class="container-fluid">
+<mat-form-field>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
+</mat-form-field>
+
+<div class="table-wrapper-scroll-y my-custom-scrollbar">
+
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 text-center">
+
+  <!-- File Name Column -->
+  <ng-container matColumnDef="dataFile">
+    <th mat-header-cell *matHeaderCellDef class="text-center bg-dark text-white tableTitle"> Documento </th>
+    <td mat-cell *matCellDef="let element"> {{element.dataFile}} </td>
+  </ng-container>
+
+  <!-- Date Column -->
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef class="text-center bg-dark text-white tableTitle"> Fecha </th>
+    <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+  </ng-container>
+
+  <!-- Ethereum Tx Hash Column -->
+  <ng-container matColumnDef="ethHash">
+    <th mat-header-cell *matHeaderCellDef class="text-center bg-dark text-white tableTitle"> Hash Ethereum </th>
+    <td mat-cell *matCellDef="let element"> {{element.ethHash}} </td>
+  </ng-container>
+
+  <!-- Download File Column -->
+  <ng-container matColumnDef="download">
+    <th mat-header-cell *matHeaderCellDef class="text-center bg-dark text-white tableTitle"> Descargar Documento ⇩ </th>
+    <td mat-cell *matCellDef="let element" class="downloadColumn" (click)="downloadFile(element.download)"> {{element.download}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+</div>
+</div>
