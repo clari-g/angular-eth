@@ -9,6 +9,7 @@ contract Iotdata {
 
  string testData = "Hello World";
 
+ // Test Contract Connection
  function get_testData() public view returns(string memory tstData){
    return testData;
  }

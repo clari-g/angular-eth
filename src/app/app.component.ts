@@ -1,9 +1,9 @@
 import { Component, HostListener, NgZone, ViewChild, AfterViewInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TableComponent } from './table/table.component';
-import { IPFS } from './ipfs';
 import {Buffer} from 'buffer';
-
+const ipfsClient = require('ipfs-http-client');
+const ipfs = ipfsClient('http://localhost:5001');
 import {Web3Service, MetaCoinService} from '../services/services';
 
 @Component({
@@ -31,7 +31,6 @@ export class AppComponent {
  request = new XMLHttpRequest();
 
  constructor(
-  @Inject(IPFS) private ipfs,
    private http: HttpClient,
    private _ngZone: NgZone,
    private web3Service: Web3Service,
@@ -114,7 +113,7 @@ export class AppComponent {
 
  public async ipfsAdd(path: string, value: string) {
   const content = Buffer.from(value);
-  const filesAdded = await this.ipfs.add({path, content});
+  const filesAdded = await ipfs.add({path, content});
   this.ipfsHash = filesAdded[0].hash;
   console.log(this.ipfsHash);
 
@@ -123,9 +122,7 @@ export class AppComponent {
 }
 
  public async ipfsCat() {
-  /*const fileBuffer = await this.ipfs.cat(this.ipfsHash);
-  console.log(fileBuffer.toString());*/
-  this.ipfs.cat(this.ipfsHash, (err, data) => {
+  ipfs.cat(this.ipfsHash, (err, data) => {
     if (err) throw err
   console.log('Resultado de hash en IPFS: '+data);
   });

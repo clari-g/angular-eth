@@ -10,7 +10,6 @@ import {MatInputModule} from '@angular/material';
 
 import {MetaCoinService, Web3Service} from '../services/services';
 import { TableComponent } from './table/table.component';
-import { IPFS, initIPFS } from './ipfs';
 
 const SERVICES = [
   MetaCoinService,
@@ -31,13 +30,7 @@ const SERVICES = [
       MatInputModule
    ],
    providers: [
-      SERVICES,
-      {
-        provide: APP_INITIALIZER,
-        useFactory: initIPFS,
-        multi: true,
-        deps: [IPFS]
-      }
+      SERVICES
    ],
    bootstrap: [
       AppComponent

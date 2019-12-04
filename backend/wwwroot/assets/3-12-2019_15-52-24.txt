@@ -1,6 +1,0 @@
-ID Estacion: 15 |Estado: IN_SERVICE |Cantidad bicicletas: 0
-ID Estacion: 16 |Estado: END_OF_LIFE |Cantidad bicicletas: 0
-ID Estacion: 17 |Estado: IN_SERVICE |Cantidad bicicletas: 1
-ID Estacion: 18 |Estado: END_OF_LIFE |Cantidad bicicletas: 0
-ID Estacion: 19 |Estado: IN_SERVICE |Cantidad bicicletas: 0
-ID Estacion: 20 |Estado: IN_SERVICE |Cantidad bicicletas: 1
