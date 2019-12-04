@@ -59,7 +59,7 @@ export class TableComponent implements OnInit {
   // TODO: change URL in VM
   downloadFile(a) {
     // console.log(a);
-    this.http.get('https://localhost:44301/HelloWorld/Download/' + a).subscribe(
+    this.http.get('http://localhost/test/HelloWorld/Download/' + a).subscribe(
       data => {
         const response = JSON.stringify(data);
         const x = JSON.parse(response);

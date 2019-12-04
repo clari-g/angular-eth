@@ -156,13 +156,12 @@ return(datetime2);
   }
 }
 
-// TODO: change URL in VM
  createFile(path: string, content: string) {
   path += '.txt';
   const data = new FormData();
   data.append('fileName' , path);
   data.append('data' , content);
-  this.request.open('POST', 'https://localhost:44301/HelloWorld/upload2', true);
+  this.request.open('POST', 'http://localhost/test/HelloWorld/upload', true);
   this.request.send(data);
 
   // subir archivo a IPFS
