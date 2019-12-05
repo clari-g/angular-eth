@@ -1,4 +1,4 @@
-import { Component, HostListener, NgZone, ViewChild, AfterViewInit, Inject } from '@angular/core';
+import { Component, HostListener, ViewChild, AfterViewInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TableComponent } from './table/table.component';
 import {Buffer} from 'buffer';
@@ -54,21 +54,6 @@ export class AppComponent {
 
  ngAfterViewInit(){}
 
- onReady = () => {
-
-   // Get the initial account balance so it can be displayed.
-   this.web3Service.getAccounts().subscribe(accs => {
-     this.accounts = accs;
-     this.account = this.accounts[0];
-
-     // This is run from window:load and ZoneJS is not aware of it we
-     // need to use _ngZone.run() so that the UI updates on promise resolution
-     this._ngZone.run(() =>
-       this.testContract()
-     );
-   }, err => alert(err));
- }
-
  testContract = () => {
   this.metaCoinService.testEth(this.account)
     .subscribe(value => {
@@ -90,6 +75,7 @@ export class AppComponent {
  getAPI() {
   console.log('Llamar API');
   this.fileTableName = 'Estaciones:';
+  this.fileData = '';
   this.http.get('https://apitransporte.buenosaires.gob.ar/ecobici/gbfs/stationStatus?client_id=617771e49d8846bfb7a7f1a24e76ac46&client_secret=99bEe0E6075F47678B24d77a6c6c14A2').subscribe(
     data => {
       this.date1 = this.getTime(1);
